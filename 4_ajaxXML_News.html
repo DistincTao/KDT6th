@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="js/jquery-3.7.1.min.js"></script>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+		<title>MBN 뉴스기사를 xml로 받아와 parsing 해보자</title>
+		<script>
+			$(function () {
+				transData();
+			});
+			function transData() {
+				$.ajax({
+					url: 'https://mbn.co.kr/rss/', //데이터가 송수신될 서버의 주소
+					type: 'GET', // 통신방식 ( GET, POST, PUT, DELETE)
+					datatype: 'xml', // 수신받을 데이터 타입 (MINE TYPE)
+					success: function (data) {
+						// 통신이 성공하면 수행할 함수
+						console.log(data);
+						parsingXML(data);
+					},
+					error: function () {},
+					complete: function () {},
+				});
+			}
+
+			function parsingXML(xml) {
+				/// 부트스트랩 아코디언으로 출력해보기
+				let news = xml.getElementsByTagName('item');
+				console.log(news);
+				let output = `<div id="accordion">`;
+				//  let
+				$.each(news, function (index, news) {
+					output += `<div class="card"><div class="card-header">
+			        <a class="btn" data-bs-toggle="collapse" href="#collapse${index}">
+			        ${$(news).children().eq(0).text()}</a></div>`;
+					output += `<div id="collapse${index}" class="collapse show" data-bs-parent="#accordion"><div class="card-body">`;
+					output += `<a href="${$(news).children().eq(1).text()}">기사 보러 가기</a><br>`;
+					output += `<div>주요 내용</div>`;
+					let eq3 = `${$(news).children().eq(3).text().replaceAll('![CDATA', '')}`;
+					eq3 = `${$(news).children().eq(3).text().replaceAll(']]', ']')}`;
+					output += `${eq3}<br>`;
+					output += `${new Date($(news).children().eq(4).text()).toLocaleString()}<br>`;
+					output += `구분 : ${$(news).children().eq(6).text()}`;
+					output += `</div></div></div>`;
+				});
+				output += `</div>`;
+				$('#output').html(output);
+				//
+			}
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<h1>MBN 뉴스</h1>
+			<div id="output">
+				<!-- 
+
+						<div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+							<div class="card-body">
+							</div>
+						</div>
+					</div>
+				</div> -->
+			</div>
+		</div>
+	</body>
+</html>

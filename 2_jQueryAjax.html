@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="js/jquery-3.7.1.min.js"></script>
+		<title>AJAX 방식 with jQuery</title>
+		<script>
+			// 로딩버튼을 누르면 서버에 있는 hello.txt 파일을 비동기 통신방식으로 가져와서
+			// div영역에 그 내용을 출력하자
+			function txtLoad() {
+				$.ajax({
+					url: 'http://goott351.cafe24.com/cho/hello.txt', //데이터가 송수신될 서버의 주소
+					type: 'GET', // 통신방식 ( GET, POST, PUT, DELETE)
+					datatype: 'text', // 수신받을 데이터 나입 (MINE TYPE)
+					success: function (data) {
+						// 통신이 성공하면 수행할 함수
+						$('#output').html(data);
+						console.log('ajax success');
+					},
+					error: function () {},
+					complete: function () {},
+				});
+			}
+		</script>
+	</head>
+	<body>
+		<input type="button" value="로딩" onclick="txtLoad()" />
+		<div id="output"></div>
+	</body>
+</html>
