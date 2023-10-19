@@ -35,18 +35,33 @@
 				let output = `<div id="accordion">`;
 
 				$.each(news, function (index, news) {
-					output += `<div class="card"><div class="card-header">
+					if (index < 1) {
+						output += `<div class="card"><div class="card-header">
 			      <a class="btn" data-bs-toggle="collapse" href="#collapse${index}">
 			      ${$(news).children().eq(0).text()}</a></div>`;
-					output += `<div id="collapse${index}" class="collapse" data-bs-parent="#accordion"><div class="card-body">`;
-					output += `<a href="${$(news).children().eq(1).text()}">기사 보러 가기</a><br>`;
-					output += `<div>주요 내용</div>`;
-					let eq3 = `${$(news).children().eq(3).text().replaceAll('![CDATA', '')}`;
-					eq3 = `${$(news).children().eq(3).text().replaceAll(']]', ']')}`;
-					output += `${eq3}<br>`;
-					output += `${new Date($(news).children().eq(4).text()).toLocaleString()}<br>`;
-					output += `구분 : ${$(news).children().eq(6).text()}`;
-					output += `</div></div></div>`;
+						output += `<div id="collapse${index}" class="collapse show" data-bs-parent="#accordion"><div class="card-body">`;
+						output += `<a href="${$(news).children().eq(1).text()}">기사 보러 가기</a><br>`;
+						output += `<div>주요 내용</div>`;
+						let eq3 = `${$(news).children().eq(3).text().replaceAll('![CDATA', '')}`;
+						eq3 = `${$(news).children().eq(3).text().replaceAll(']]', ']')}`;
+						output += `${eq3}<br>`;
+						output += `${new Date($(news).children().eq(4).text()).toLocaleString()}<br>`;
+						output += `구분 : ${$(news).children().eq(6).text()}`;
+						output += `</div></div></div>`;
+					} else {
+						output += `<div class="card"><div class="card-header">
+			      <a class="btn" data-bs-toggle="collapse" href="#collapse${index}">
+			      ${$(news).children().eq(0).text()}</a></div>`;
+						output += `<div id="collapse${index}" class="collapse" data-bs-parent="#accordion"><div class="card-body">`;
+						output += `<a href="${$(news).children().eq(1).text()}">기사 보러 가기</a><br>`;
+						output += `<div>주요 내용</div>`;
+						let eq3 = `${$(news).children().eq(3).text().replaceAll('![CDATA', '')}`;
+						eq3 = `${$(news).children().eq(3).text().replaceAll(']]', ']')}`;
+						output += `${eq3}<br>`;
+						output += `${new Date($(news).children().eq(4).text()).toLocaleString()}<br>`;
+						output += `구분 : ${$(news).children().eq(6).text()}`;
+						output += `</div></div></div>`;
+					}
 				});
 				output += `</div>`;
 				$('#output').html(output);
