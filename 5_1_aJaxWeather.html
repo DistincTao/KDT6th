@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="js/jquery-3.7.1.min.js"></script>
+		<script>
+			$(function () {
+				getWeatherData();
+			});
+
+			function getWeatherData() {
+				let url = `https://api.openweathermap.org/data/2.5/weather?lat=37.483782&lon=126.9003409&appid=05047a241a245da121cc197c528b215d`;
+				$.ajax({
+					url: url,
+					type: 'GET',
+					datatype: 'JSON',
+					success: function (data) {
+						console.log(data);
+					},
+				});
+			}
+		</script>
+		<title>Document</title>
+	</head>
+	<body></body>
+</html>
