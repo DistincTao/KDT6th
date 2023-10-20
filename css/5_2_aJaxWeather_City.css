@@ -1,0 +1,44 @@
+img {
+	width: 80px;
+}
+.selectUnits [type='radio'] {
+	opacity: 0;
+}
+.selectUnits [type='radio']:checked + img {
+	box-shadow: 4px 4px 10px gray;
+}
+.selectUnits img {
+	cursor: pointer;
+	width: 30px;
+}
+.selectUnits {
+	display: flex;
+	justify-content: space-between;
+	padding-left: 20px;
+}
+.weatherInfo_weather {
+	font-size: 40px;
+}
+h1 {
+	margin: 20px;
+}
+.controller {
+	display: flex;
+	padding: 10px 20px;
+}
+.selectUnits img:hover {
+	background-color: tomato;
+}
+#map {
+	width: 500px;
+	height: 500px;
+	padding: 50px;
+}
+
+.container {
+	margin: 20px;
+}
+
+h1 {
+	padding: 10px 20px;
+}

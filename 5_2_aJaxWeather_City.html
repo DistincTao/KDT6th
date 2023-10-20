@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="js/jquery-3.7.1.min.js"></script>
+		<script src="js/5_2_aJaxWeather_City.js"></script>
+		<link rel="stylesheet" href="css/5_2_aJaxWeather_City.css" />
+		<script
+			type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9782112b5b273c3f5f61e2be0dda036e"></script>
+
+		<title>Document</title>
+	</head>
+	<body>
+		<h1><span id="cityName">Seoul</span> 날씨 정보</h1>
+		<div class="controller">
+			<select id="selectCity">
+				<option value="Seoul" checked>서울</option>
+				<option value="Daejeon">대전</option>
+				<option value="Busan">부산</option>
+				<option value="Ulsan">울산</option>
+				<option value="Pohang">포항</option>
+				<option value="Gwangju">광주</option>
+				<option value="Yeosu">여수</option>
+				<option value="Incheon">인천</option>
+				<option value="Daegu">대구</option>
+				<option value="Jeju">제주</option>
+			</select>
+
+			<div class="selectUnits">
+				<label>
+					<input type="radio" name="units" id="" value="metric" /><img
+						class="icon"
+						src="img/celsius.png"
+						alt="degree C"
+				/></label>
+				<label
+					><input type="radio" name="units" id="" value="imperial" /><img
+						class="icon"
+						src="img/fahrenheit.png"
+						alt="degree F"
+				/></label>
+				<label
+					><input type="radio" name="units" id="" value="standard" /><img
+						class="icon"
+						src="img/thermometer.png"
+						alt="degree K"
+				/></label>
+			</div>
+		</div>
+		<div class="container">
+			<div class="contents">
+				<div class="weatherInfo_weather"></div>
+				<div class="weatherInfo_mainWeather"></div>
+			</div>
+		</div>
+		<div id="map"></div>
+	</body>
+</html>
