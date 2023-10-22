@@ -14,7 +14,6 @@
 
 			$(function () {
 				transData();
-
 				$('#findNews').keyup(function (e) {
 					if (e.keyCode == 13) {
 						searchNews($('#findNews').val());
@@ -68,35 +67,34 @@
 
 				let output = `<div id="accordion">`;
 				$.each(news, function (index, news) {
+					let title = $(news).children().eq(0).text();
+					let category = $(news).children().eq(6).text();
+					let newsContents = `${$(news).children().eq(3).text().replaceAll('![CDATA', '')}`;
+					newsContents = `${$(news).children().eq(3).text().replaceAll(']]', ']')}`;
+					let pubishDate = new Date($(news).children().eq(4).text()).toLocaleString();
+					let link = $(news).children().eq(1).text();
+
 					if (index < 1) {
 						output += `<div class="card"><div class="card-header">
 			      <a class="btn" data-bs-toggle="collapse" href="#collapse${index}">
-			      ${$(news).children().eq(0).text()}</a></div>`;
+			      ${title}</a></div>`;
 						output += `<div id="collapse${index}" class="collapse show" data-bs-parent="#accordion"><div class="card-body">`;
-						output += `<div class="classify">${$(news).children().eq(6).text()}</div>`;
+						output += `<div class="classify">${category}</div>`;
 						output += `<div><b>주요 내용</b></div><hr>`;
-						let eq3 = `${$(news).children().eq(3).text().replaceAll('![CDATA', '')}`;
-						eq3 = `${$(news).children().eq(3).text().replaceAll(']]', ']')}`;
-						output += `<div>${eq3}</div>`;
-						output += `<a href="${$(news).children().eq(1).text()}">기사 보러 가기</a>`;
-						output += `<div class="time">${new Date(
-							$(news).children().eq(4).text()
-						).toLocaleString()}</div>`;
+						output += `<div>${newsContents}</div>`;
+						output += `<a href="${link}">기사 보러 가기</a>`;
+						output += `<div class="time">${pubishDate}</div>`;
 						output += `</div></div></div>`;
 					} else {
 						output += `<div class="card"><div class="card-header">
 			      <a class="btn" data-bs-toggle="collapse" href="#collapse${index}">
-			      ${$(news).children().eq(0).text()}</a></div>`;
+			      ${title}</a></div>`;
 						output += `<div id="collapse${index}" class="collapse" data-bs-parent="#accordion"><div class="card-body">`;
-						output += `<div class="classify">${$(news).children().eq(6).text()}</div>`;
+						output += `<div class="classify">${category}</div>`;
 						output += `<div><b>주요 내용</b></div><hr>`;
-						let eq3 = `${$(news).children().eq(3).text().replaceAll('![CDATA', '')}`;
-						eq3 = `${$(news).children().eq(3).text().replaceAll(']]', ']')}`;
-						output += `<div>${eq3}</div>`;
-						output += `<a href="${$(news).children().eq(1).text()}">기사 보러 가기</a>`;
-						output += `<div class="time">${new Date(
-							$(news).children().eq(4).text()
-						).toLocaleString()}</div>`;
+						output += `<div>${newsContents}</div>`;
+						output += `<a href="${link}">기사 보러 가기</a>`;
+						output += `<div class="time">${pubishDate}</div>`;
 						output += `</div></div></div>`;
 					}
 				});
