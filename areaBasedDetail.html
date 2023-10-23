@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="js/common.js"></script>
+		<title>지역기반 관광정보</title>
+		<script>
+			// Q7M%2Bcf7QMbCteShXTJlhrzsnivonZKs2k9k2mDz75b9GWiznATUqT4ibLrqmlhzzxeNvxcGi82KaizWQdUMB1w%3D%3D
+			// console.log(location.href);
+			// console.log(getParameter('contentId'));
+			let contentId = getParameter('contentId');
+
+			$(function () {
+				getTourImg();
+			});
+
+			function getCommonDetailData() {
+				let baseUrl = `http://apis.data.go.kr/B551011/KorService1/detailCommon1?serviceKey=Q7M%2Bcf7QMbCteShXTJlhrzsnivonZKs2k9k2mDz75b9GWiznATUqT4ibLrqmlhzzxeNvxcGi82KaizWQdUMB1w%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=${contentId}&defaultYN=Y&_type=json`;
+				$('.loading').show();
+				$.ajax({
+					url: baseUrl,
+					type: 'GET',
+					datatyep: 'json',
+					// async: false, //  동기 통신 방식으로 설정 (default = true)
+					success: function (data) {
+						console.log(data);
+						parsingJSON(data);
+					},
+					error: function () {},
+					complete: function () {
+						$('.loading').hide();
+					},
+				});
+			}
+
+			function getTourImg() {
+				let baseUrl = `https://apis.data.go.kr/B551011/KorService1/detailImage1?serviceKey=Q7M%2Bcf7QMbCteShXTJlhrzsnivonZKs2k9k2mDz75b9GWiznATUqT4ibLrqmlhzzxeNvxcGi82KaizWQdUMB1w%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=${contentId}&imageYN=Y&subImageYN=Y&_type=json`;
+				$('.loading').show();
+				$.ajax({
+					url: baseUrl,
+					type: 'GET',
+					datatyep: 'json',
+					async: false, //  동기 통신 방식으로 설정 (default = true)
+					success: function (data) {
+						// console.log(data);
+						makeImgSlider(data);
+					},
+					error: function () {},
+					complete: function () {
+						$('.loading').hide();
+					},
+				});
+			}
+
+			function makeImgSlider(json) {
+				let itemsArr = json.response.body.items.item;
+				let outputImgs = '';
+				let outputDots = '';
+
+				$.each(itemsArr, function (index, detail) {
+					console.log(detail);
+					if (detail.originimgurl == '') {
+						outputImgs += `<div class="carousel-item active"><img src="img/noimage.png" class="d-block w-100"></div>`;
+						// outputDots += `<button type="button" data-bs-target="#demo" data-bs-slide-to="${index}" class="active"></button>`;
+					} else {
+						if (index == 0) {
+							outputImgs += `<div class="carousel-item active"><img src="${detail.originimgurl}" alt="${detail.imgname}" class="d-block w-100"></div>`;
+							outputDots += `<button type="button" data-bs-target="#demo" data-bs-slide-to="${index}" class="active"></button>`;
+						} else {
+							outputImgs += `<div class="carousel-item"><img src="${detail.originimgurl}" alt="${detail.imgname}" class="d-block w-100"></div>`;
+							outputDots += `<button type="button" data-bs-target="#demo" data-bs-slide-to="${index}"></button>`;
+						}
+					}
+				});
+				let controlItem = `				<button
+					class="carousel-control-prev"
+					type="button"
+					data-bs-target="#demo"
+					data-bs-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</button>
+				<button
+					class="carousel-control-next"
+					type="button"
+					data-bs-target="#demo"
+					data-bs-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</button>`;
+				$('.carousel-indicators').append(outputDots);
+				$('.carousel-inner').append(outputImgs);
+				$('#demo').append(controlItem);
+			}
+		</script>
+		<style>
+			.loading {
+				/* display: none; */
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="p-5 bg-primary text-white text-center">
+			<h1>Tour API</h1>
+			<p>Resize this responsive page to see the effect!</p>
+		</div>
+
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<div class="container-fluid">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link active" href="./index.html">홈</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="./areaBasedList.html">지역기반관광정보</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="./areaBasedDetail.html">상세페이지</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container mt-5">
+			<h2>TOUR API 지역기반 관광정보 상세 페이지</h2>
+		</div>
+		<div id="tourDetails">
+			<div id="demo" class="carousel slide" data-bs-ride="carousel">
+				<!-- Indicators/dots -->
+				<div class="carousel-indicators"></div>
+				<!-- The slideshow/carousel -->
+				<div class="carousel-inner"></div>
+				<!-- Left and right controls/icons -->
+			</div>
+		</div>
+
+		<div class="mt-5 p-4 bg-dark text-white text-center">
+			<p>Footer</p>
+			<p>Goott5 All rights reserved.</p>
+		</div>
+	</body>
+</html>
