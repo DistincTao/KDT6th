@@ -38,24 +38,13 @@
 						pageNo++;
 						getTourData(pageNo);
 						// console.log(pageNo, totalPages);
-						// $(this).show();
+						$(this).show();
 					} else if (pageNo == totalPages) {
-						// $(this).hide();
+						$(this).hide();
 						// alert('마지막 페이지 입니다.');
 						$(this).attr('disabled', true);
 					}
 				});
-				// $('#prevPage').click(function () {
-				// 	if (pageNo < totalPages) {
-				// 		pageNo--;
-				// 		// console.log(pageNo, totalPages);
-				// 		// $(this).show();
-				// 		getTourData();
-				// 	} else if (pageNo < 1) {
-				// 		// $(this).hide();
-				// 		$(this).attr('disabled', true);
-				// 	}
-				// });
 			});
 
 			function getTourData() {
